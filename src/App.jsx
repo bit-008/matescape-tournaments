@@ -9,7 +9,7 @@ const demoTournaments = [
     date: "2025-05-20",
     type: "rapid",
     status: "upcoming",
-    players: 07,
+    players: "07",
     winners: {
       gold: "TBD",
       silver: "TBD", 
