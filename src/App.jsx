@@ -5,17 +5,17 @@ import { Search, ChevronDown, Calendar, Medal, Moon, Sun, Users } from 'lucide-r
 const demoTournaments = [
   {
     id: 1,
-    name: "Rapid Championship 2024",
-    date: "2024-12-15",
+    name: "Rapid 10|0 & 30|0",
+    date: "2025-05-20",
     type: "rapid",
-    status: "completed",
-    players: 64,
+    status: "upcoming",
+    players: 07,
     winners: {
-      gold: "Magnus Carlsen",
-      silver: "Hikaru Nakamura", 
-      bronze: "Fabiano Caruana"
+      gold: "TBD",
+      silver: "TBD", 
+      bronze: "TBD"
     },
-    excelLink: "#"
+    excelLink: "https://docs.google.com/spreadsheets/d/16Kk1npleEeacmeK6VBTgHqcJDBwGJApglwTN5XLLjdQ/edit?gid=0#gid=0"
   },
   {
     id: 2,
