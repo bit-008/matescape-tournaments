@@ -165,7 +165,7 @@ function App() {
       <div className="container mx-auto px-4 py-8">
         {/* Logo - Increased size by 25% */}
         <div className="text-center mb-8">
-          <img src={darkMode ? darkLogo : lightLogo} />
+          <img src={darkMode ? darkLogo : lightLogo} 
             alt="MATESCAPE TOURNAMENTS" 
             className="mx-auto h-10 md:h-15 object-contain"
           />
