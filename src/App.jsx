@@ -49,6 +49,53 @@ function App() {
   // Get unique dates for date filter
   const uniqueDates = [...new Set(tournaments.map(t => t.date))].sort();
 
+  // Enhanced search function that includes month and year matching
+const createSearchableString = (tournament) => {
+  const date = new Date(tournament.date);
+  const monthNames = [
+    'january', 'february', 'march', 'april', 'may', 'june',
+    'july', 'august', 'september', 'october', 'november', 'december'
+  ];
+  const shortMonthNames = [
+    'jan', 'feb', 'mar', 'apr', 'may', 'jun',
+    'jul', 'aug', 'sep', 'oct', 'nov', 'dec'
+  ];
+  
+  const year = date.getFullYear().toString();
+  const month = date.getMonth();
+  const monthName = monthNames[month];
+  const shortMonthName = shortMonthNames[month];
+  const day = date.getDate().toString();
+  const monthNumber = (month + 1).toString().padStart(2, '0');
+  
+  // Create a comprehensive searchable string
+  return [
+    tournament.name,
+    tournament.date,
+    year,
+    monthName,
+    shortMonthName,
+    monthNumber,
+    day,
+    tournament.type,
+    tournament.status,
+    // Additional combinations
+    `${monthName} ${year}`,
+    `${shortMonthName} ${year}`,
+    `${monthNumber}/${year}`,
+    `${day}/${monthNumber}`,
+    `${day}/${monthNumber}/${year}`,
+    `${monthName} ${day}`,
+    `${shortMonthName} ${day}`,
+    // Year-month combinations
+    `${year}-${monthNumber}`,
+    `${year}/${monthNumber}`,
+    // Common date formats
+    `${monthNumber}-${day}-${year}`,
+    `${day}-${monthNumber}-${year}`,
+  ].join(' ').toLowerCase();
+};
+
   // Filter tournaments based on search, type, and date
   useEffect(() => {
     let filtered = tournaments;
