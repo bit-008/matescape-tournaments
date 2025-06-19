@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ChevronDown, Calendar, Medal, Moon, Sun, Users } from 'lucide-react';
-import darkLogo from 'src/assets/dark-bg-copy.png';
-import lightLogo from 'src/assets/light-bg-copy.png';
+import darkLogo from './assets/dark-bg-copy.png';
+import lightLogo from './assets/light-bg-copy.png';
 
 // Demo tournament data
 const demoTournaments = [
