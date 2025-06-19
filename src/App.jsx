@@ -348,8 +348,8 @@ function App() {
                         onClick={() => setSelectedTournament(tournament)}
                         className={`p-4 rounded-lg cursor-pointer transition-all hover:scale-105 hover:shadow-xl border-2 relative ${
                           darkMode 
-                            ? 'border-yellow-400/40 hover:border-yellow-400/60 bg-gradient-to-r backdrop-blur-lg' 
-                            : 'border-yellow-500/60 hover:border-yellow-500/80 bg-gradient-to-r'
+                            ? 'border-white/20 hover:border-white/40 bg-gradient-to-r backdrop-blur-lg' 
+                            : 'border-white/60 hover:border-white/80 bg-gradient-to-r'
                         } ${typeColors[tournament.type]} text-white shadow-lg hover:shadow-2xl`}
                       >
                         <div className="absolute top-2 right-2">
