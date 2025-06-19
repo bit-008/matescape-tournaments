@@ -25,11 +25,11 @@ const demoTournaments = [
   {
     id: 2,
     name: "Blitz 5|0",
-    startDate: "2025-06-25",
+    startDate: "2025-06-27",
     endDate: "2025-06-30",
     type: "blitz",
     status: "upcoming",
-    players: "32",
+    players: "00",
     winners: {
       gold: "TBD",
       silver: "TBD",
