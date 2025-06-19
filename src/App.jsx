@@ -8,9 +8,10 @@ const demoTournaments = [
   {
     id: 1,
     name: "Rapid 10|0 & 30|0",
-    date: "2025-05-20",
+    startDate: "2025-06-20",
+    endDate: "2025-06-24",
     type: "rapid",
-    status: "upcoming",
+    status: "ongoing",
     players: "07",
     winners: {
       gold: "TBD",
@@ -22,7 +23,8 @@ const demoTournaments = [
   {
     id: 2,
     name: "Blitz 5|0",
-    date: "2025-05-25",
+    startDate: "2025-06-25",
+    endDate: "2025-06-30",
     type: "blitz",
     status: "upcoming",
     players: "32",
@@ -47,54 +49,62 @@ function App() {
   const [dateDropdownOpen, setDateDropdownOpen] = useState(false);
 
   // Get unique dates for date filter
-  const uniqueDates = [...new Set(tournaments.map(t => t.date))].sort();
+  const uniqueDateRanges = [...new Set(tournaments.map(t => `${t.startDate}_${t.endDate}`))].sort();
 
   // Enhanced search function that includes month and year matching
 const createSearchableString = (tournament) => {
-  const date = new Date(tournament.date);
-  const monthNames = [
-    'january', 'february', 'march', 'april', 'may', 'june',
-    'july', 'august', 'september', 'october', 'november', 'december'
-  ];
-  const shortMonthNames = [
-    'jan', 'feb', 'mar', 'apr', 'may', 'jun',
-    'jul', 'aug', 'sep', 'oct', 'nov', 'dec'
-  ];
-  
-  const year = date.getFullYear().toString();
-  const month = date.getMonth();
-  const monthName = monthNames[month];
-  const shortMonthName = shortMonthNames[month];
-  const day = date.getDate().toString();
-  const monthNumber = (month + 1).toString().padStart(2, '0');
-  
-  // Create a comprehensive searchable string
-  return [
-    tournament.name,
-    tournament.date,
-    year,
-    monthName,
-    shortMonthName,
-    monthNumber,
-    day,
-    tournament.type,
-    tournament.status,
-    // Additional combinations
-    `${monthName} ${year}`,
-    `${shortMonthName} ${year}`,
-    `${monthNumber}/${year}`,
-    `${day}/${monthNumber}`,
-    `${day}/${monthNumber}/${year}`,
-    `${monthName} ${day}`,
-    `${shortMonthName} ${day}`,
-    // Year-month combinations
-    `${year}-${monthNumber}`,
-    `${year}/${monthNumber}`,
-    // Common date formats
-    `${monthNumber}-${day}-${year}`,
-    `${day}-${monthNumber}-${year}`,
-  ].join(' ').toLowerCase();
-};
+    const startDate = new Date(tournament.startDate);
+    const endDate = new Date(tournament.endDate);
+    const monthNames = [
+      'january', 'february', 'march', 'april', 'may', 'june',
+      'july', 'august', 'september', 'october', 'november', 'december'
+    ];
+    const shortMonthNames = [
+      'jan', 'feb', 'mar', 'apr', 'may', 'jun',
+      'jul', 'aug', 'sep', 'oct', 'nov', 'dec'
+    ];
+    
+    const createDateStrings = (date) => {
+      const year = date.getFullYear().toString();
+      const month = date.getMonth();
+      const monthName = monthNames[month];
+      const shortMonthName = shortMonthNames[month];
+      const day = date.getDate().toString();
+      const monthNumber = (month + 1).toString().padStart(2, '0');
+      
+      return [
+        year,
+        monthName,
+        shortMonthName,
+        monthNumber,
+        day,
+        `${monthName} ${year}`,
+        `${shortMonthName} ${year}`,
+        `${monthNumber}/${year}`,
+        `${day}/${monthNumber}`,
+        `${day}/${monthNumber}/${year}`,
+        `${monthName} ${day}`,
+        `${shortMonthName} ${day}`,
+        `${year}-${monthNumber}`,
+        `${year}/${monthNumber}`,
+        `${monthNumber}-${day}-${year}`,
+        `${day}-${monthNumber}-${year}`,
+      ];
+    };
+
+    const startDateStrings = createDateStrings(startDate);
+    const endDateStrings = createDateStrings(endDate);
+    
+    return [
+      tournament.name,
+      tournament.startDate,
+      tournament.endDate,
+      tournament.type,
+      tournament.status,
+      ...startDateStrings,
+      ...endDateStrings,
+    ].join(' ').toLowerCase();
+  };
 
   // Filter tournaments based on search, type, and date
   useEffect(() => {
@@ -115,12 +125,15 @@ const createSearchableString = (tournament) => {
 
     // Date filter
     if (dateFilter !== 'all') {
-      filtered = filtered.filter(tournament => tournament.date === dateFilter);
+      const [startDate, endDate] = dateFilter.split('_');
+      filtered = filtered.filter(tournament => 
+        tournament.startDate === startDate && tournament.endDate === endDate
+      );
     }
 
     setFilteredTournaments(filtered);
   }, [searchTerm, typeFilter, dateFilter, tournaments]);
-
+  
   // Group tournaments by month
   const groupedTournaments = filteredTournaments.reduce((acc, tournament) => {
     const date = new Date(tournament.date);
@@ -150,13 +163,41 @@ const createSearchableString = (tournament) => {
       : 'from-blue-600 to-blue-500'
   };
 
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { 
+  const formatDateRange = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    
+    const startFormatted = start.toLocaleDateString('en-US', { 
       month: 'short', 
       day: 'numeric',
       year: 'numeric'
     });
+    
+    const endFormatted = end.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric',
+      year: 'numeric'
+    });
+    
+    return `${startFormatted} - ${endFormatted}`;
+  };
+
+  const formatDateRangeForFilter = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    
+    const startFormatted = start.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric'
+    });
+    
+    const endFormatted = end.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric',
+      year: 'numeric'
+    });
+    
+    return `${startFormatted} - ${endFormatted}`;
   };
 
   return (
@@ -262,20 +303,23 @@ const createSearchableString = (tournament) => {
                 >
                   All Dates
                 </button>
-                {uniqueDates.map(date => (
-                  <button
-                    key={date}
-                    onClick={() => {
-                      setDateFilter(date);
-                      setDateDropdownOpen(false);
-                    }}
-                    className={`block w-full text-left px-4 py-2 hover:bg-opacity-50 transition-colors ${
-                      darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
-                    } ${dateFilter === date ? 'font-semibold' : ''}`}
-                  >
-                    {formatDate(date)}
-                  </button>
-                ))}
+               {uniqueDateRanges.map(dateRange => {
+                  const [startDate, endDate] = dateRange.split('_');
+                  return (
+                    <button
+                      key={dateRange}
+                      onClick={() => {
+                        setDateFilter(dateRange);
+                        setDateDropdownOpen(false);
+                      }}
+                      className={`block w-full text-left px-4 py-2 hover:bg-opacity-50 transition-colors text-sm ${
+                        darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                      } ${dateFilter === dateRange ? 'font-semibold' : ''}`}
+                    >
+                      {formatDateRangeForFilter(startDate, endDate)}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -290,6 +334,50 @@ const createSearchableString = (tournament) => {
                 : 'bg-white/40 border-white/50'
             }`}>
               <h2 className="text-2xl font-bold mb-6 text-center">{monthYear}</h2>
+
+              {/* Ongoing Tournaments */}
+              {groups.ongoing.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold mb-4 text-yellow-500 flex items-center gap-2">
+                    <Clock className="w-5 h-5" />
+                    Ongoing Tournaments
+                  </h3>
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    {groups.ongoing.map(tournament => (
+                      <div
+                        key={tournament.id}
+                        onClick={() => setSelectedTournament(tournament)}
+                        className={`p-4 rounded-lg cursor-pointer transition-all hover:scale-105 hover:shadow-xl border-2 relative ${
+                          darkMode 
+                            ? 'border-yellow-400/40 hover:border-yellow-400/60 bg-gradient-to-r backdrop-blur-lg' 
+                            : 'border-yellow-500/60 hover:border-yellow-500/80 bg-gradient-to-r'
+                        } ${typeColors[tournament.type]} text-white shadow-lg hover:shadow-2xl`}
+                      >
+                        <div className="absolute top-2 right-2">
+                          <div className="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+                        </div>
+                        <h4 className="font-bold text-lg mb-2 drop-shadow-sm pr-6">{tournament.name}</h4>
+                        <p className="text-sm opacity-90 drop-shadow-sm">{formatDateRange(tournament.startDate, tournament.endDate)}</p>
+                        <span className={`inline-block mt-2 px-2 py-1 rounded-full text-xs capitalize border ${
+                          darkMode 
+                            ? 'bg-white/20 backdrop-blur-sm border-white/20' 
+                            : 'bg-white/40 backdrop-blur-sm border-white/30'
+                        }`}>
+                          {tournament.type}
+                        </span>
+                        <div className={`absolute bottom-3 right-3 flex items-center gap-1 text-xs px-2 py-1 rounded-full border ${
+                          darkMode 
+                            ? 'bg-white/20 backdrop-blur-sm border-white/20' 
+                            : 'bg-white/40 backdrop-blur-sm border-white/30'
+                        }`}>
+                          <Users className="w-3 h-3" />
+                          {tournament.players}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               
               {/* Upcoming Tournaments */}
               {groups.upcoming.length > 0 && (
@@ -307,7 +395,7 @@ const createSearchableString = (tournament) => {
                         } ${typeColors[tournament.type]} text-white shadow-lg hover:shadow-2xl relative`}
                       >
                         <h4 className="font-bold text-lg mb-2 drop-shadow-sm">{tournament.name}</h4>
-                        <p className="text-sm opacity-90 drop-shadow-sm">{formatDate(tournament.date)}</p>
+                        <p className="text-sm opacity-90 drop-shadow-sm">{formatDateRange(tournament.startDate, tournament.endDate)}</p>
                         <span className={`inline-block mt-2 px-2 py-1 rounded-full text-xs capitalize border ${
                           darkMode 
                             ? 'bg-white/20 backdrop-blur-sm border-white/20' 
@@ -345,7 +433,7 @@ const createSearchableString = (tournament) => {
                         } ${typeColors[tournament.type]} text-white relative shadow-lg hover:shadow-2xl`}
                       >
                         <h4 className="font-bold text-lg mb-2 drop-shadow-sm">{tournament.name}</h4>
-                        <p className="text-sm opacity-90 drop-shadow-sm">{formatDate(tournament.date)}</p>
+                        <p className="text-sm opacity-90 drop-shadow-sm">{formatDateRange(tournament.startDate, tournament.endDate)}</p>
                         <span className={`inline-block mt-2 px-2 py-1 rounded-full text-xs capitalize border ${
                           darkMode 
                             ? 'bg-white/20 backdrop-blur-sm border-white/20' 
@@ -395,10 +483,16 @@ const createSearchableString = (tournament) => {
               </button>
             </div>
             
-            <p className="text-sm opacity-75 mb-2">{formatDate(selectedTournament.date)}</p>
+            <p className="text-sm opacity-75 mb-2">{formatDateRange(selectedTournament.startDate, selectedTournament.endDate)}</p>
             <div className="flex items-center gap-2 text-sm opacity-75 mb-4">
               <Users className="w-4 h-4" />
               <span>{selectedTournament.players} players</span>
+              {selectedTournament.status === 'ongoing' && (
+                <>
+                  <Clock className="w-4 h-4 ml-2 text-yellow-500" />
+                  <span className="text-yellow-500">Ongoing</span>
+                </>
+              )}
             </div>
             
             <div className="space-y-3 mb-6">
