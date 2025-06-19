@@ -164,7 +164,7 @@ function App() {
         {/* Logo - Increased size by 25% */}
         <div className="text-center mb-8">
           <img 
-            src={darkMode ? `${process.env.PUBLIC_URL}/dark-bg-copy.png` : `${process.env.PUBLIC_URL}/light-bg-copy.png`}
+            src={darkMode ? "./matescape-tournaments/dark-bg-copy.png" : "./matescape-tournaments/light-bg-copy.png"}
             alt="MATESCAPE TOURNAMENTS" 
             className="mx-auto h-20 md:h-25 object-contain"
           />
