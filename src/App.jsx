@@ -56,7 +56,7 @@ function App() {
     // Search filter
     if (searchTerm) {
       filtered = filtered.filter(tournament => {
-        const searchStr = `${tournament.name} ${tournament.date}`.toLowerCase();
+        const searchStr = `${tournament.name} ${tournament.date} ${tournament.month} ${tournament.year}`.toLowerCase();
         const searchTerms = searchTerm.toLowerCase().split(' ');
         return searchTerms.every(term => searchStr.includes(term));
       });
