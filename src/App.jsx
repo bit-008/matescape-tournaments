@@ -5,6 +5,22 @@ import lightLogo from './assets/light-bg-copy.png';
 
 // Demo tournament data with date ranges
 const demoTournaments = [
+
+   {
+    id: 1,
+    name: "Rapid 10|0 & 30|0",
+    startDate: "2025-06-20",
+    endDate: "2025-06-24",
+    type: "rapid",
+    status: "upcoming",
+    players: "07",
+    winners: {
+      gold: "TBD",
+      silver: "TBD",
+      bronze: "TBD"
+    },
+    excelLink: "https://docs.google.com/spreadsheets/d/16Kk1npleEeacmeK6VBTgHqcJDBwGJApglwTN5XLLjdQ/edit?gid=0#gid=0"
+  },
   
   {
     id: 2,
@@ -20,22 +36,6 @@ const demoTournaments = [
       bronze: "TBD"
     },
     excelLink: "#"
-  },
-  
-  {
-    id: 1,
-    name: "Rapid 10|0 & 30|0",
-    startDate: "2025-06-20",
-    endDate: "2025-06-24",
-    type: "rapid",
-    status: "upcoming",
-    players: "07",
-    winners: {
-      gold: "TBD",
-      silver: "TBD",
-      bronze: "TBD"
-    },
-    excelLink: "https://docs.google.com/spreadsheets/d/16Kk1npleEeacmeK6VBTgHqcJDBwGJApglwTN5XLLjdQ/edit?gid=0#gid=0"
   },
   
 ];
