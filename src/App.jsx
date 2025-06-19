@@ -126,7 +126,7 @@ function App() {
           <img src={darkMode ? darkLogo : lightLogo} 
             alt="MATESCAPE TOURNAMENTS" 
             className="mx-auto object-contain"
-            style={{ height: '95px', maxWidth: '100%' }}
+            style={{ height: '93px', maxWidth: '100%' }}
           />
         </div>
 
