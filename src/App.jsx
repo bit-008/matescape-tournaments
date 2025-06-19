@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ChevronDown, Calendar, Medal, Moon, Sun, Users, Clock } from 'lucide-react';
+import darkLogo from './assets/dark-bg-copy.png';
+import lightLogo from './assets/light-bg-copy.png';
 
 // Demo tournament data with date ranges
 const demoTournaments = [
@@ -209,11 +211,10 @@ function App() {
       <div className="container mx-auto px-4 py-8">
         {/* Logo - Increased size by 25% */}
         <div className="text-center mb-8">
-          <img 
-            src={darkMode ? "/src/assets/dark bg copy.png" : "/src/assets/light bg copy.png"} 
+          <img src={darkMode ? darkLogo : lightLogo} 
             alt="MATESCAPE TOURNAMENTS" 
-            className="mx-auto h-20 md:h-25 object-contain"
-          />
+            className="mx-auto object-contain"
+             style={{ height: '95px', maxWidth: '100%' }} />
         </div>
 
         {/* Search and Filter Controls */}
