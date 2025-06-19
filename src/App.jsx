@@ -5,42 +5,27 @@ import { Search, ChevronDown, Calendar, Medal, Moon, Sun, Users, Clock } from 'l
 const demoTournaments = [
   {
     id: 1,
-    name: "Rapid Championship 2024",
-    startDate: "2024-12-10",
-    endDate: "2024-12-15",
+    name: "Rapid 10|0 & 30|0",
+    startDate: "2025-06-20",
+    endDate: "2025-06-24",
     type: "rapid",
-    status: "completed",
-    players: 64,
+    status: "ongoing",
+    players: "07",
     winners: {
-      gold: "Magnus Carlsen",
-      silver: "Hikaru Nakamura", 
-      bronze: "Fabiano Caruana"
+      gold: "TBD",
+      silver: "TBD",
+      bronze: "TBD"
     },
-    excelLink: "#"
+    excelLink: "https://docs.google.com/spreadsheets/d/16Kk1npleEeacmeK6VBTgHqcJDBwGJApglwTN5XLLjdQ/edit?gid=0#gid=0"
   },
   {
     id: 2,
-    name: "Blitz Masters",
-    startDate: "2024-12-20",
-    endDate: "2024-12-24",
+    name: "Blitz 5|0",
+    startDate: "2025-06-25",
+    endDate: "2025-06-30",
     type: "blitz",
-    status: "ongoing",
-    players: 32,
-    winners: {
-      gold: "TBD",
-      silver: "TBD",
-      bronze: "TBD"
-    },
-    excelLink: "#"
-  },
-  {
-    id: 3,
-    name: "Classical Tournament",
-    startDate: "2025-01-10",
-    endDate: "2025-01-17",
-    type: "classical",
     status: "upcoming",
-    players: 16,
+    players: "32",
     winners: {
       gold: "TBD",
       silver: "TBD",
@@ -48,51 +33,6 @@ const demoTournaments = [
     },
     excelLink: "#"
   },
-  {
-    id: 4,
-    name: "Bullet Speed Championship",
-    startDate: "2024-12-22",
-    endDate: "2024-12-26",
-    type: "bullet",
-    status: "ongoing",
-    players: 128,
-    winners: {
-      gold: "TBD",
-      silver: "TBD",
-      bronze: "TBD"
-    },
-    excelLink: "#"
-  },
-  {
-    id: 5,
-    name: "New Year Rapid",
-    startDate: "2025-01-01",
-    endDate: "2025-01-05",
-    type: "rapid",
-    status: "upcoming",
-    players: 48,
-    winners: {
-      gold: "TBD",
-      silver: "TBD",
-      bronze: "TBD"
-    },
-    excelLink: "#"
-  },
-  {
-    id: 6,
-    name: "Winter Blitz Series",
-    startDate: "2024-12-23",
-    endDate: "2024-12-27",
-    type: "blitz",
-    status: "ongoing",
-    players: 96,
-    winners: {
-      gold: "TBD",
-      silver: "TBD",
-      bronze: "TBD"
-    },
-    excelLink: "#"
-  }
 ];
 
 function App() {
