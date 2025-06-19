@@ -33,48 +33,6 @@ const demoTournaments = [
     },
     excelLink: "#"
   },
-  {
-    id: 3,
-    name: "Classical Tournament",
-    date: "2025-01-10",
-    type: "classical",
-    status: "upcoming",
-    players: 16,
-    winners: {
-      gold: "TBD",
-      silver: "TBD",
-      bronze: "TBD"
-    },
-    excelLink: "#"
-  },
-  {
-    id: 4,
-    name: "Bullet Speed",
-    date: "2024-12-28",
-    type: "bullet",
-    status: "upcoming",
-    players: 128,
-    winners: {
-      gold: "TBD",
-      silver: "TBD",
-      bronze: "TBD"
-    },
-    excelLink: "#"
-  },
-  {
-    id: 5,
-    name: "New Year Rapid",
-    date: "2025-01-01",
-    type: "rapid",
-    status: "upcoming",
-    players: 48,
-    winners: {
-      gold: "TBD",
-      silver: "TBD",
-      bronze: "TBD"
-    },
-    excelLink: "#"
-  }
 ];
 
 function App() {
@@ -168,7 +126,7 @@ function App() {
           <img src={darkMode ? darkLogo : lightLogo} 
             alt="MATESCAPE TOURNAMENTS" 
             className="mx-auto object-contain"
-            style={{ height: '60px', maxWidth: '100%' }}
+            style={{ height: '80px', maxWidth: '100%' }}
           />
         </div>
 
