@@ -7,25 +7,25 @@ import lightLogo from './assets/light-bg-copy.png';
 const demoTournaments = [
   {
     id: 1,
-    name: "Rapid Championship 2024",
-    date: "2024-12-15",
+    name: "Rapid 10|0 & 30|0",
+    date: "2025-05-20",
     type: "rapid",
-    status: "completed",
-    players: 64,
+    status: "upcoming",
+    players: "07",
     winners: {
-      gold: "Magnus Carlsen",
-      silver: "Hikaru Nakamura", 
-      bronze: "Fabiano Caruana"
+      gold: "TBD",
+      silver: "TBD",
+      bronze: "TBD"
     },
-    excelLink: "#"
+    excelLink: "https://docs.google.com/spreadsheets/d/16Kk1npleEeacmeK6VBTgHqcJDBwGJApglwTN5XLLjdQ/edit?gid=0#gid=0"
   },
   {
     id: 2,
-    name: "Blitz Masters",
-    date: "2024-12-22",
+    name: "Blitz 5|0",
+    date: "2025-05-25",
     type: "blitz",
     status: "upcoming",
-    players: 32,
+    players: "32",
     winners: {
       gold: "TBD",
       silver: "TBD",
@@ -126,7 +126,7 @@ function App() {
           <img src={darkMode ? darkLogo : lightLogo} 
             alt="MATESCAPE TOURNAMENTS" 
             className="mx-auto object-contain"
-            style={{ height: '90px', maxWidth: '100%' }}
+            style={{ height: '95px', maxWidth: '100%' }}
           />
         </div>
 
