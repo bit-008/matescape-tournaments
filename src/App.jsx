@@ -167,7 +167,7 @@ function App() {
         <div className="text-center mb-8">
           <img src={darkMode ? darkLogo : lightLogo} />
             alt="MATESCAPE TOURNAMENTS" 
-            className="mx-auto h-20 md:h-25 object-contain"
+            className="mx-auto h-10 md:h-15 object-contain"
           />
         </div>
 
