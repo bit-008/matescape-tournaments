@@ -55,13 +55,12 @@ function App() {
 
     // Search filter
     if (searchTerm) {
-      filtered = filtered.filter(tournament => {
-        const searchStr = `${tournament.name} ${tournament.date} ${tournament.month} ${tournament.year}`.toLowerCase();
-        const searchTerms = searchTerm.toLowerCase().split(' ');
-        return searchTerms.every(term => searchStr.includes(term));
-      });
-    }
-
+  filtered = filtered.filter(tournament => {
+    const searchableString = createSearchableString(tournament);
+    const searchTerms = searchTerm.toLowerCase().split(' ');
+    return searchTerms.every(term => searchableString.includes(term));
+  });
+}
     // Type filter
     if (typeFilter !== 'all') {
       filtered = filtered.filter(tournament => tournament.type === typeFilter);
