@@ -1,33 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ChevronDown, Calendar, Medal, Moon, Sun, Users } from 'lucide-react';
-import darkLogo from './assets/dark-bg-copy.png';
-import lightLogo from './assets/light-bg-copy.png';
+import { Search, ChevronDown, Calendar, Medal, Moon, Sun, Users, Clock } from 'lucide-react';
 
-// Demo tournament data
+// Demo tournament data with date ranges
 const demoTournaments = [
   {
     id: 1,
-    name: "Rapid 10|0 & 30|0",
-    startDate: "2025-06-20",
-    endDate: "2025-06-24",
+    name: "Rapid Championship 2024",
+    startDate: "2024-12-10",
+    endDate: "2024-12-15",
     type: "rapid",
-    status: "ongoing",
-    players: "07",
+    status: "completed",
+    players: 64,
     winners: {
-      gold: "TBD",
-      silver: "TBD",
-      bronze: "TBD"
+      gold: "Magnus Carlsen",
+      silver: "Hikaru Nakamura", 
+      bronze: "Fabiano Caruana"
     },
-    excelLink: "https://docs.google.com/spreadsheets/d/16Kk1npleEeacmeK6VBTgHqcJDBwGJApglwTN5XLLjdQ/edit?gid=0#gid=0"
+    excelLink: "#"
   },
   {
     id: 2,
-    name: "Blitz 5|0",
-    startDate: "2025-06-25",
-    endDate: "2025-06-30",
+    name: "Blitz Masters",
+    startDate: "2024-12-20",
+    endDate: "2024-12-24",
     type: "blitz",
-    status: "upcoming",
-    players: "32",
+    status: "ongoing",
+    players: 32,
     winners: {
       gold: "TBD",
       silver: "TBD",
@@ -35,6 +33,66 @@ const demoTournaments = [
     },
     excelLink: "#"
   },
+  {
+    id: 3,
+    name: "Classical Tournament",
+    startDate: "2025-01-10",
+    endDate: "2025-01-17",
+    type: "classical",
+    status: "upcoming",
+    players: 16,
+    winners: {
+      gold: "TBD",
+      silver: "TBD",
+      bronze: "TBD"
+    },
+    excelLink: "#"
+  },
+  {
+    id: 4,
+    name: "Bullet Speed Championship",
+    startDate: "2024-12-22",
+    endDate: "2024-12-26",
+    type: "bullet",
+    status: "ongoing",
+    players: 128,
+    winners: {
+      gold: "TBD",
+      silver: "TBD",
+      bronze: "TBD"
+    },
+    excelLink: "#"
+  },
+  {
+    id: 5,
+    name: "New Year Rapid",
+    startDate: "2025-01-01",
+    endDate: "2025-01-05",
+    type: "rapid",
+    status: "upcoming",
+    players: 48,
+    winners: {
+      gold: "TBD",
+      silver: "TBD",
+      bronze: "TBD"
+    },
+    excelLink: "#"
+  },
+  {
+    id: 6,
+    name: "Winter Blitz Series",
+    startDate: "2024-12-23",
+    endDate: "2024-12-27",
+    type: "blitz",
+    status: "ongoing",
+    players: 96,
+    winners: {
+      gold: "TBD",
+      silver: "TBD",
+      bronze: "TBD"
+    },
+    excelLink: "#"
+  }
 ];
 
 function App() {
@@ -44,15 +102,15 @@ function App() {
   const [typeFilter, setTypeFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
   const [selectedTournament, setSelectedTournament] = useState(null);
-  const [darkMode, setDarkMode] = useState(true); // Default to dark mode
+  const [darkMode, setDarkMode] = useState(true);
   const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [dateDropdownOpen, setDateDropdownOpen] = useState(false);
 
-  // Get unique dates for date filter
+  // Get unique date ranges for date filter
   const uniqueDateRanges = [...new Set(tournaments.map(t => `${t.startDate}_${t.endDate}`))].sort();
 
-  // Enhanced search function that includes month and year matching
-const createSearchableString = (tournament) => {
+  // Enhanced search function that includes month and year matching for date ranges
+  const createSearchableString = (tournament) => {
     const startDate = new Date(tournament.startDate);
     const endDate = new Date(tournament.endDate);
     const monthNames = [
@@ -110,14 +168,15 @@ const createSearchableString = (tournament) => {
   useEffect(() => {
     let filtered = tournaments;
 
-    // Search filter
+    // Enhanced search filter
     if (searchTerm) {
-  filtered = filtered.filter(tournament => {
-    const searchableString = createSearchableString(tournament);
-    const searchTerms = searchTerm.toLowerCase().split(' ');
-    return searchTerms.every(term => searchableString.includes(term));
-  });
-}
+      filtered = filtered.filter(tournament => {
+        const searchableString = createSearchableString(tournament);
+        const searchTerms = searchTerm.toLowerCase().split(' ');
+        return searchTerms.every(term => searchableString.includes(term));
+      });
+    }
+
     // Type filter
     if (typeFilter !== 'all') {
       filtered = filtered.filter(tournament => tournament.type === typeFilter);
@@ -133,14 +192,14 @@ const createSearchableString = (tournament) => {
 
     setFilteredTournaments(filtered);
   }, [searchTerm, typeFilter, dateFilter, tournaments]);
-  
-  // Group tournaments by month
+
+  // Group tournaments by status and month
   const groupedTournaments = filteredTournaments.reduce((acc, tournament) => {
-    const date = new Date(tournament.date);
-    const monthYear = `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`;
+    const startDate = new Date(tournament.startDate);
+    const monthYear = `${startDate.toLocaleString('default', { month: 'long' })} ${startDate.getFullYear()}`;
     
     if (!acc[monthYear]) {
-      acc[monthYear] = { upcoming: [], completed: [] };
+      acc[monthYear] = { upcoming: [], completed: [], ongoing: [] };
     }
     
     acc[monthYear][tournament.status].push(tournament);
@@ -210,10 +269,10 @@ const createSearchableString = (tournament) => {
       <div className="container mx-auto px-4 py-8">
         {/* Logo - Increased size by 25% */}
         <div className="text-center mb-8">
-          <img src={darkMode ? darkLogo : lightLogo} 
+          <img 
+            src={darkMode ? "/src/assets/dark bg copy.png" : "/src/assets/light bg copy.png"} 
             alt="MATESCAPE TOURNAMENTS" 
-            className="mx-auto object-contain"
-            style={{ height: '93px', maxWidth: '100%' }}
+            className="mx-auto h-20 md:h-25 object-contain"
           />
         </div>
 
@@ -224,7 +283,7 @@ const createSearchableString = (tournament) => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Search tournaments..."
+              placeholder="Search by name, date, month, year..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className={`w-full pl-10 pr-4 py-3 rounded-lg border transition-all focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
@@ -287,7 +346,7 @@ const createSearchableString = (tournament) => {
               <ChevronDown className="w-4 h-4" />
             </button>
             {dateDropdownOpen && (
-              <div className={`absolute top-full mt-2 right-0 rounded-lg border backdrop-blur-sm z-10 min-w-40 max-h-60 overflow-y-auto ${
+              <div className={`absolute top-full mt-2 right-0 rounded-lg border backdrop-blur-sm z-10 min-w-48 max-h-60 overflow-y-auto ${
                 darkMode 
                   ? 'bg-gray-800/90 border-gray-600' 
                   : 'bg-white/90 border-gray-300'
@@ -303,7 +362,7 @@ const createSearchableString = (tournament) => {
                 >
                   All Dates
                 </button>
-               {uniqueDateRanges.map(dateRange => {
+                {uniqueDateRanges.map(dateRange => {
                   const [startDate, endDate] = dateRange.split('_');
                   return (
                     <button
@@ -334,7 +393,7 @@ const createSearchableString = (tournament) => {
                 : 'bg-white/40 border-white/50'
             }`}>
               <h2 className="text-2xl font-bold mb-6 text-center">{monthYear}</h2>
-
+              
               {/* Ongoing Tournaments */}
               {groups.ongoing.length > 0 && (
                 <div className="mb-6">
@@ -378,7 +437,7 @@ const createSearchableString = (tournament) => {
                   </div>
                 </div>
               )}
-              
+
               {/* Upcoming Tournaments */}
               {groups.upcoming.length > 0 && (
                 <div className="mb-6">
