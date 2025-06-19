@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, ChevronDown, Calendar, Medal, Moon, Sun, Users } from 'lucide-react';
+import darkLogo from 'src/assets/dark-bg-copy.png';
+import lightLogo from 'src/assets/light-bg-copy.png';
 
 // Demo tournament data
 const demoTournaments = [
@@ -163,8 +165,7 @@ function App() {
       <div className="container mx-auto px-4 py-8">
         {/* Logo - Increased size by 25% */}
         <div className="text-center mb-8">
-          <img 
-            src={darkMode ? "./matescape-tournaments/dark-bg-copy.png" : "./matescape-tournaments/light-bg-copy.png"}
+          <img src={darkMode ? darkLogo : lightLogo} />
             alt="MATESCAPE TOURNAMENTS" 
             className="mx-auto h-20 md:h-25 object-contain"
           />
