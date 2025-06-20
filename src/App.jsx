@@ -12,7 +12,7 @@ const demoTournaments = [
     startDate: "2025-06-20",
     endDate: "2025-06-24",
     type: "rapid",
-    status: "upcoming",
+    status: "ongoing",
     players: "09",
     winners: {
       gold: "TBD",
